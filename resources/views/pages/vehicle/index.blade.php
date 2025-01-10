@@ -55,8 +55,8 @@
                                 </label>
                                 <select id="vehicle_typ" class="form-select rounded-pill" name="vehicle_typ" required>
                                     <option selected disabled>Select vehicle type</option>
-                                    <option value="prime_mover">Prime Mover</option>
-                                    <option value="lorry">Lorry</option>
+                                    <option value="Prime Mover">Prime Mover</option>
+                                    <option value="Lorry">Lorry</option>
                                 </select>
                             </div>
 

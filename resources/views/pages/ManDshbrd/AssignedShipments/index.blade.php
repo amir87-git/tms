@@ -106,17 +106,13 @@
                                 <td>{{ $shipment->description }}</td>
                                 <td>{{ $shipment->driver->username ?? 'N/A' }}</td>
                                 <td>{{ $shipment->vehicle->vehicle_typ ?? 'N/A' }}</td>
-                                <td>{{ $shipment->vehicle->vehicle_no }}</td>
-                                <td>{{ $shipment->vehicle->trailer_no }}</td>
+                                <td>{{ $shipment->vehicle->vehicle_no ?? 'N/A' }}</td>
+                                <td>{{ $shipment->vehicle->trailer_no ?? 'N/A' }}</td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="10" class="text-center text-muted py-4">
                                     <i class="bi bi-box-arrow-in-left me-2"></i> No assigned shipments found.
-                                    <br>
-                                    <a href="{{ route('shipment.index') }}" class="btn btn-primary mt-3">
-                                        <i class="bi bi-file-earmark-plus me-2"></i> Assign New Shipment
-                                    </a>
                                 </td>
                             </tr>
                         @endforelse

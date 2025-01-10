@@ -49,7 +49,7 @@
                         <td>{{ $shipment->phone }}</td>
                         <td>{{ $shipment->driver->username ?? 'N/A' }}</td>
                         <td>{{ $shipment->vehicle->vehicle_no }}</td>
-                        <td>{{ $shipment->vehicle->Trailer_no ?? 'N/A' }}</td>
+                        <td>{{ $shipment->vehicle->trailer_no ?? 'N/A' }}</td>
                         <td>{{ $shipment->type ?? 'N/A' }}</td>
                         <td>{{ $shipment->description ?? 'N/A' }}</td>
                         <td>{{ $shipment->total_time ?? 'N/A' }}</td>

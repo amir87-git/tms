@@ -89,8 +89,8 @@
     @endif
 
     <!-- Financial Breakdown -->
-    <p style="font-size: 12px; margin-top: 20px;"><strong>Transport Charges:</strong> Rs.{{ number_format($completedShipments->transport_charges, 2) }}</p>
-    <p style="font-size: 12px;"><strong>Highway Charges:</strong> Rs.{{ number_format($completedShipments->highway_charges, 2) }}</p>
+    <p style="font-size: 12px; margin-top: 20px;"><strong>Transport Charges:</strong> Rs.{{ number_format($completedShipments->trnsprt_chrg, 2) }}</p>
+    <p style="font-size: 12px;"><strong>Highway Charges:</strong> Rs.{{ number_format($completedShipments->highway_chrg, 2) }}</p>
     <p style="font-size: 12px; color: #007bff;"><strong>Total Amount:</strong> Rs.{{ number_format($completedShipments->total_amnt, 2) }}</p>
 </div>
 

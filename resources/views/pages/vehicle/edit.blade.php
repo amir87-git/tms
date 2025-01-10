@@ -24,8 +24,8 @@
                                 <i class="bi bi-truck"></i> Vehicle Type
                             </label>
                             <select class="form-select rounded-pill" name="vehicle_typ" required>
-                                <option value="prime_mover" {{ $vehicles->vehicle_typ == 'prime_mover' ? 'selected' : '' }}>Prime Mover</option>
-                                <option value="lorry" {{ $vehicles->vehicle_typ == 'lorry' ? 'selected' : '' }}>Lorry</option>
+                                <option value="Prime Mover" {{ $vehicles->vehicle_typ == 'Prime Mover' ? 'selected' : '' }}>Prime Mover</option>
+                                <option value="Lorry" {{ $vehicles->vehicle_typ == 'Lorry' ? 'selected' : '' }}>Lorry</option>
                             </select>
                         </div>
 
@@ -61,16 +61,6 @@
                             <input type="text" class="form-control rounded-pill" name="end_mtr_rdng" value="{{ $vehicles->end_mtr_rdng }}" placeholder="Enter end meter reading">
                         </div>
 
-                        <!-- Fuel Needed -->
-                        <div class="col-md-6 mb-3">
-                            <label for="fuel" class="form-label">
-                                <i class="bi bi-fuel-pump me-2"></i>Fuel Needed
-                            </label>
-                            <select class="form-select rounded-pill" name="fuel" required>
-                                <option value="yes" {{ $vehicles->fuel == 'yes' ? 'selected' : '' }}>Yes</option>
-                                <option value="no" {{ $vehicles->fuel == 'no' ? 'selected' : '' }}>No</option>
-                            </select>
-                        </div>
 
                         <!-- Status -->
                         <div class="col-md-6 mb-3">
