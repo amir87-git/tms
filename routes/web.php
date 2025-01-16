@@ -32,6 +32,7 @@ Route::resource('trips', TripController::class);
 Route::middleware(['auth:driver', 'preventBackHistory'])->group(function () {
     Route::resource('receive-shipments', ReceiveShipmentController::class);
 });
+
 Route::middleware(['auth:manager', 'preventBackHistory'])->group(function () {
     Route::resource('assigned-shipments', AssignedShipmentController::class);
 });

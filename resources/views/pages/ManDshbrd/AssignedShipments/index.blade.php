@@ -107,7 +107,7 @@
                                 <td>{{ $shipment->driver->username ?? 'N/A' }}</td>
                                 <td>{{ $shipment->vehicle->vehicle_typ ?? 'N/A' }}</td>
                                 <td>{{ $shipment->vehicle->vehicle_no ?? 'N/A' }}</td>
-                                <td>{{ $shipment->vehicle->trailer_no ?? 'N/A' }}</td>
+                                <td>{{ $shipment->trailer_no ?? 'N/A' }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -134,5 +134,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    (function() {
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+        window.history.pushState(null, null, window.location.href);
+    };
+})();
+</script>
 
 @endsection
