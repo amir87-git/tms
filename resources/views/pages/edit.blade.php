@@ -31,7 +31,7 @@
                             <label for="email" class="form-label fw-bold">
                                 <i class="bi bi-envelope"></i> Email
                             </label>
-                            <input type="email" class="form-control rounded-pill" name="email" value="{{ $drivers->email }}" readonly>
+                            <input type="email" class="form-control rounded-pill" name="email" value="{{ $drivers->email }}" required>
                         </div>
 
                         <!-- Password -->

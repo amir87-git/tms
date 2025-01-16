@@ -31,17 +31,25 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'vehicle_no' => 'required|unique:vehicles,vehicle_no',
-            'trailer_no' => 'required|unique:vehicles,trailer_no',
-        ], [
+        ];
+
+        if ($request->vehicle_typ == 'Prime Mover') {
+            $rules['trailer_no'] = 'required|string|max:255|unique:vehicles,trailer_no';
+        } else {
+            $rules['trailer_no'] = 'nullable|unique:vehicles,trailer_no';
+        }
+
+        $request->validate($rules, [
             'vehicle_no.unique' => 'This vehicle number is already registered.',
             'trailer_no.unique' => 'This trailer number is already registered.',
         ]);
-        
+
         $this->vehicle->create($request->all());
         return redirect()->back();
     }
+
 
     /**
      * Display the specified resource.

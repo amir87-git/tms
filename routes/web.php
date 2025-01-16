@@ -29,10 +29,10 @@ Route::post('/shipment/{id}/assign', [ShipmentController::class, 'storeAssignmen
 // Assigned and Received Shipments
 Route::resource('assigned-shipments', AssignedShipmentController::class);
 Route::resource('trips', TripController::class);
-Route::middleware(['auth:driver'])->group(function () {
+Route::middleware(['auth:driver', 'preventBackHistory'])->group(function () {
     Route::resource('receive-shipments', ReceiveShipmentController::class);
 });
-Route::middleware(['auth:manager'])->group(function () {
+Route::middleware(['auth:manager', 'preventBackHistory'])->group(function () {
     Route::resource('assigned-shipments', AssignedShipmentController::class);
 });
 

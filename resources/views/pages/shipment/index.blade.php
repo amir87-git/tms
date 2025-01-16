@@ -74,25 +74,26 @@
                                     <i class="bi bi-tags"></i> Type
                                 </label>
                                 <select class="form-select rounded-pill" name="type" required>
-                                    <option selected disabled>Select type</option>
-                                    <option value="im">IM</option>
-                                    <option value="ex">EX</option>
-                                    <option value="lcl">LCL</option>
-                                    <option value="mt">MT</option>
-                                    <option value="laden">LADEN</option>
+                                    <option value="" selected disabled>Select type</option>
+                                    <option value="IM">IM</option>
+                                    <option value="EX">EX</option>
+                                    <option value="LCL">LCL</option>
+                                    <option value="MT">MT</option>
+                                    <option value="LADEN">LADEN</option>
                                 </select>
                             </div>
 
-                            <!-- Status -->
+                            <!-- Email -->
                             <div class="col-md-6">
-                                <label for="status" class="text-muted form-label fw-bold">
-                                    <i class="bi bi-info-circle"></i> Status
+                                <label for="email" class="form-label fw-bold">
+                                    <i class="bi bi-envelope"></i> Email
                                 </label>
-                                <select class="form-select rounded-pill" name="status" required>
-                                    <option selected disabled>Pending...</option>
-                                    <option value="active">Assigned</option>
-                                    <option value="completed">Completed</option>
-                                </select>
+                                <input type="email" class="form-control rounded-pill @error('email') is-invalid @enderror" name="email" placeholder="Enter email" required>
+                                @error('email')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
                             </div>
 
                             <!-- Description -->

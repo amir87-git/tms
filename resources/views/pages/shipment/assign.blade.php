@@ -32,7 +32,6 @@
                                 <span class="text-muted input-group-text rounded-start-pill"><i class="fa fa-phone"></i>+94</span>
                                 <input type="text" class="form-control" name="phone" value="{{ $shipment->phone }}" readonly>
                             </div>
-                            
                         </div>
 
                         <!-- Description -->
@@ -57,7 +56,7 @@
                                 <i class="bi bi-person-badge"></i> Assign Driver
                             </label>
                             <select class="form-select rounded-pill" name="driver_id" required>
-                                <option selected disabled>Select active driver</option>
+                                <option value="" selected disabled>Select active driver</option>
                                 @foreach ($drivers as $driver)
                                     <option value="{{ $driver->id }}">
                                         (ID: {{ $driver->id }}) {{ $driver->username }}
@@ -71,10 +70,10 @@
                             <label for="vehicle_id" class="form-label fw-bold">
                                 <i class="bi bi-truck"></i> Assign Vehicle
                             </label>
-                            <select class="form-select rounded-pill" name="vehicle_id" required>
-                                <option selected disabled>Select active vehicle</option>
+                            <select class="form-select rounded-pill" id="vehicleSelect" name="vehicle_id" required>
+                                <option value="" selected disabled>Select active vehicle</option>
                                 @foreach ($vehicles as $vehicle)
-                                    <option value="{{ $vehicle->id }}">
+                                    <option value="{{ $vehicle->id }}" data-type="{{ $vehicle->vehicle_typ }}">
                                         ID: {{ $vehicle->id }} | {{ $vehicle->vehicle_typ }} (No: {{ $vehicle->vehicle_no }})
                                     </option>
                                 @endforeach
@@ -86,10 +85,10 @@
                             <label for="vehicle_id" class="form-label fw-bold">
                                 <i class="bi bi-truck-front"></i> Assign Trailer
                             </label>
-                            <select class="form-select rounded-pill " name="vehicle_id" required>
+                            <select class="form-select rounded-pill" id="trailerSelect" name="trailer_no" required>
                                 <option selected disabled>Select active trailer</option>
                                 @foreach ($vehicles as $vehicle)
-                                    <option value="{{ $vehicle->id }}">
+                                    <option value="{{ $vehicle->trailer_no }}">
                                         Trailer No: {{ $vehicle->trailer_no }}
                                     </option>
                                 @endforeach
@@ -108,5 +107,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const vehicleSelect = document.getElementById('vehicleSelect');
+        const trailerSelect = document.getElementById('trailerSelect');
+
+        vehicleSelect.addEventListener('change', function () {
+            const selectedOption = vehicleSelect.options[vehicleSelect.selectedIndex];
+            const vehicleType = selectedOption.getAttribute('data-type');
+
+            if (vehicleType === 'Lorry') {
+                trailerSelect.value = '';
+                trailerSelect.setAttribute('disabled', 'disabled');
+            } else {
+                trailerSelect.removeAttribute('disabled');
+            }
+        });
+    });
+</script>
 
 @endsection

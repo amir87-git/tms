@@ -188,4 +188,17 @@
     </div>
 </div>
 
+<script>
+    // Listen for changes in vehicle type selection
+    document.getElementById('vehicle_typ').addEventListener('change', function() {
+        var trailerNoInput = document.getElementById('trailer_no');
+
+        if (this.value === 'Prime Mover') {
+            trailerNoInput.disabled = false;  // Enable Trailer No for Prime Mover
+        } else {
+            trailerNoInput.disabled = true;   // Disable Trailer No for Lorry
+        }
+    });
+</script>
+
 @endsection

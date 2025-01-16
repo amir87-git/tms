@@ -53,16 +53,14 @@
                             </select>
                         </div>
 
-                        <!-- Status -->
+                        <!-- Email -->
                         <div class="col-md-6 mb-3">
-                            <label for="status" class="form-label fw-bold">
-                                <i class="bi bi-info-circle"></i> Status
+                            <label for="email" class="form-label fw-bold">
+                                <i class="bi bi-envelope"></i> Email
                             </label>
-                            <select class="form-select rounded-pill" name="status" required>
-                                <option value="assigned" {{ $shipment->status == 'assigned' ? 'selected' : '' }}>Assigned</option>
-                                <option value="completed" {{ $shipment->status == 'completed' ? 'selected' : '' }}>Completed</option>
-                            </select>
+                            <input type="email" class="form-control rounded-pill" name="email" value="{{ $shipment->email }}" required>
                         </div>
+
 
                         <!-- Description -->
                         <div class="col-md-12 mb-3">

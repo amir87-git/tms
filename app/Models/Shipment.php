@@ -15,6 +15,7 @@ class Shipment extends Model
     // Define the fillable fields to allow mass assignment
     protected $fillable = [
         'client_name',
+        'email',
         'phone',
         'type',
         'description',
