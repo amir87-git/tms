@@ -110,21 +110,28 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const vehicleSelect = document.getElementById('vehicleSelect');
-        const trailerSelect = document.getElementById('trailerSelect');
+    const vehicleSelect = document.getElementById('vehicleSelect');
+    const trailerSelect = document.getElementById('trailerSelect');
+    const form = document.querySelector('form');
 
-        vehicleSelect.addEventListener('change', function () {
-            const selectedOption = vehicleSelect.options[vehicleSelect.selectedIndex];
-            const vehicleType = selectedOption.getAttribute('data-type');
+    vehicleSelect.addEventListener('change', function () {
+        const selectedOption = vehicleSelect.options[vehicleSelect.selectedIndex];
+        const vehicleType = selectedOption.getAttribute('data-type');
 
-            if (vehicleType === 'Lorry') {
-                trailerSelect.value = '';
-                trailerSelect.setAttribute('disabled', 'disabled');
-            } else {
-                trailerSelect.removeAttribute('disabled');
-            }
+        if (vehicleType === 'Lorry') {
+            trailerSelect.value = '';
+            trailerSelect.setAttribute('disabled', 'disabled');
+        } else {
+            trailerSelect.removeAttribute('disabled');
+        }
+    });
+
+        // Enable trailer select before form submission
+        form.addEventListener('submit', function () {
+            trailerSelect.removeAttribute('disabled');
         });
     });
+
 </script>
 
 @endsection

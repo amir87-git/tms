@@ -85,11 +85,13 @@ class ShipmentController extends Controller
         $request->validate([
             'driver_id' => 'required|exists:drivers,id',
             'vehicle_id' => 'required|exists:vehicles,id',
+            'trailer_no' => 'nullable|string',
         ]);
 
         $shipment->update([
             'driver_id' => $request->driver_id,
             'vehicle_id' => $request->vehicle_id,
+            'trailer_no' => $request->trailer_no,
             'status' => 'Assigned', // Set the status to "Assigned"
         ]);
 
