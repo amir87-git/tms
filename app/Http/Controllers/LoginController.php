@@ -41,6 +41,17 @@ class LoginController extends Controller
         $email = $request->input('email');
         $password = $request->input('password');
 
+        // Check for specific admin credentials
+        if ($this->isAdmin($email, $password)) {
+            Log::info('Admin login successful', [
+                'email' => $email,
+                'user_role' => 'admin',
+                'timestamp' => now(),
+            ]);
+            // Redirect to the manager's dashboard
+            return redirect()->route('manager.index');
+        }
+
         // Attempt to authenticate as a driver using Auth guard
         if (Auth::guard('driver')->attempt(['email' => $email, 'password' => $password])) {
             Log::info('Login successful', [
@@ -120,5 +131,11 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login.index')->with('success', 'You have been logged out successfully.');
+    }
+
+    protected function isAdmin($email, $password)
+    {
+        // Hardcoded admin credentials
+        return $email === 'ad@ad.com' && $password === '123';
     }
 }

@@ -27,40 +27,55 @@
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #011043, #03e4f8);
+            background-size: 200% 200%;
+            animation: gradientAnimation 10s ease infinite;
             color: #fff;
             text-align: center;
-            padding: 50px 20px; /* Reduced padding to reduce space */
+            padding: 50px 20px;
             position: relative;
+            overflow: hidden;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .hero .logo {
-            margin-bottom: 15px; /* Reduced space between logo and title */
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease-in-out;
         }
         .hero h2 {
-            margin: 10px 0; /* Reduced space above and below subheading */
+            margin: 10px 0;
             font-size: 1.8rem;
             font-family: 'Merriweather', serif;
             color: #fff;
+            animation: fadeIn 1.5s ease-in-out;
         }
         .hero h1 {
             font-family: 'Roboto', sans-serif;
             font-size: clamp(2.5rem, 5vw, 4rem);
-            margin: 10px 0; /* Reduced space between heading and subheading */
+            margin: 10px 0;
+            animation: fadeIn 2s ease-in-out;
         }
         .hero p {
             font-size: 1.2rem;
-            margin-bottom: 20px; /* Reduced space before button */
+            margin-bottom: 20px;
+            animation: fadeIn 2.5s ease-in-out;
         }
         .hero .cta a {
             background-color: #fff;
             color: #011043;
-            padding: 12px 25px; /* Adjusted padding for smaller button */
+            padding: 12px 25px;
             border-radius: 5px;
             font-weight: bold;
             transition: all 0.3s ease;
+            animation: fadeIn 3s ease-in-out;
         }
         .hero .cta a:hover {
             background-color: #03e4f8;
             color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         /* Features Section */
@@ -78,7 +93,7 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
             padding: 20px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .feature:hover {
             transform: translateY(-10px);
@@ -87,6 +102,10 @@
         .feature img {
             max-width: 80px;
             margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .feature:hover img {
+            transform: scale(1.1);
         }
         .feature h2 {
             font-size: 1.5rem;
@@ -115,12 +134,23 @@
             color: #fff;
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero {
                 padding: 60px 20px;
             }
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
+
+        /* Logo Animation */
         .logo {
             margin: 0 auto 10px;
             display: flex;
@@ -130,13 +160,11 @@
             border-radius: 8px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .logo img {
             height: 80px;
             width: auto;
             transition: opacity 0.3s ease;
         }
-
         .logo:hover {
             transform: scale(1.05);
         }
