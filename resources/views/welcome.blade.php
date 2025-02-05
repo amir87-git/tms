@@ -180,8 +180,9 @@
         </div>
         <p>Streamlining logistics with digital efficiency.</p>
         <div class="cta">
-            <a href="/login">Get Started</a>
+            <a href="{{ route('login') }}">Get Started</a>
         </div>
+
     </section>
 
     <section class="features">

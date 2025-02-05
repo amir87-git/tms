@@ -9,7 +9,7 @@ use App\Http\Controllers\ReceiveShipmentController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\ManagerController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,7 +45,15 @@ Route::post('approval/{id}/approve', [ApprovalController::class, 'approve'])->na
 Route::get('/completed-shipments', [ShipmentController::class, 'completedShipments'])->name('completedShipments.index');
 
 Route::resource("manager", ManagerController::class);
-Route::resource("login", LoginController::class);
+
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
 Route::get('completed-shipments/pdf/{shipment}', [PdfController::class, 'generatePDF'])->name('completed-shipments.pdf');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,35 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <!-- Header Section with Project Title -->
+    <div class="container-fluid p-4 text-center bg-light">
+        <img src="{{ URL('images/msa.png') }}" alt="Header img" class="img-fluid" style="height: auto; max-height: 120px;">
+        <h1 class="text-primary mt-3 mb-1 fw-bold">MSA Transport Management System</h1>
+        <p class="mb-2 text-danger" style="font-size: 0.9rem;">Moving towards the right path >>></p>
+    </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+    <!-- Login Form Section -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-sm border-light">
+                    <div class="card-body p-4">
+                        <h3 class="text-center mb-3 fw-bold text-primary">Login</h3>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
 
+                            <!-- Email Input -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    <i class="bi bi-envelope-fill text-primary me-1"></i>Email
+                                </label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autofocus placeholder="Enter your email">
+                                
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <!-- Password Input -->
+                            <div class="mb-3 position-relative">
+                                <label for="password" class="form-label">
+                                    <i class="bi bi-lock-fill text-primary me-1"></i>Password
+                                </label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required placeholder="Enter your password">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" id="toggle-password" style="border-left: none;">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
+                                </div>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -37,37 +52,58 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <!-- Remember Me -->
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label text-secondary" for="remember">Remember Me</label>
+                            </div>
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                            <!-- Display Errors -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger mb-3 p-2" role="alert">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                            </div>
-                        </div>
+                            @endif
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary w-100 py-2 mt-3 btn-sm">
+                                <span class="spinner-border spinner-border-sm me-1 d-none" id="login-loader"></span> Login
+                            </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                            <!-- Forgot Password -->
+                            <!-- @if (Route::has('password.request'))
+                                <div class="text-center mt-3">
+                                    <a class="text-decoration-none text-primary" href="{{ route('password.request') }}">
+                                        Forgot Your Password?
                                     </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                                </div>
+                            @endif -->
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Script for Show/Hide Password -->
+    <script>
+        document.getElementById('toggle-password').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('bi-eye-fill');
+                icon.classList.add('bi-eye-slash-fill');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('bi-eye-slash-fill');
+                icon.classList.add('bi-eye-fill');
+            }
+        });
+    </script>
 @endsection
