@@ -10,6 +10,12 @@ use App\Models\Vehicle;
 class AssignedShipmentController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth:manager');
+        $this->middleware('preventBackHistory')->except(['show', 'store']);
+    }
+
     public function index()
     {
         // Fetch only 'Assigned' shipments along with related driver and vehicle details

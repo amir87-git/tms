@@ -26,18 +26,15 @@ Route::resource('/shipment', ShipmentController::class);
 Route::get('/shipment/{id}/assign', [ShipmentController::class, 'assign'])->name('shipment.assign');
 Route::post('/shipment/{id}/assign', [ShipmentController::class, 'storeAssignment'])->name('shipment.storeAssignment');
 
-// Assigned and Received Shipments
-Route::resource('assigned-shipments', AssignedShipmentController::class);
 Route::resource('trips', TripController::class);
 Route::middleware(['auth:driver', 'preventBackHistory'])->group(function () {
     Route::resource('receive-shipments', ReceiveShipmentController::class);
+    Route::get('/receive-shipments/{id}/form', [ReceiveShipmentController::class, 'showForm'])->name('receive-shipments.form');
 });
 
 Route::middleware(['auth:manager', 'preventBackHistory'])->group(function () {
     Route::resource('assigned-shipments', AssignedShipmentController::class);
 });
-
-Route::get('/receive-shipments/{id}/form', [ReceiveShipmentController::class, 'showForm'])->name('receive-shipments.form');
 
 Route::resource('approval', ApprovalController::class);
 Route::get('approval/{id}/approve', [ApprovalController::class, 'approveForm'])->name('approval.approveForm');
@@ -46,14 +43,10 @@ Route::get('/completed-shipments', [ShipmentController::class, 'completedShipmen
 
 Route::resource("manager", ManagerController::class);
 
-
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
 Route::get('completed-shipments/pdf/{shipment}', [PdfController::class, 'generatePDF'])->name('completed-shipments.pdf');
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

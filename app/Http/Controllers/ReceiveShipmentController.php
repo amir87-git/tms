@@ -12,9 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ReceiveShipmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:driver');
+        $this->middleware('preventBackHistory')->except([ 'showForm', 'store']);
+    }
+
+
     public function index()
     {
         // Get the logged-in user's ID
