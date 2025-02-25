@@ -2,27 +2,21 @@
 
 @section('content')
 <div class="container-fluid py-3">
-    <div class="card-header bg-success align-items-center">
-        <div class="row align-items-center justify-content-center">
-            <!-- Page Title Centered -->
-            <div class="col text-center">
-                <h3 class="text-white fw-bold">
-                    <strong>Completed Shipments</strong>
-                </h3>
-                <p class="text-white fw-bold">
-                    <i class="bi bi-check-circle fs-6"></i> Destination Reached – Shipment Complete!</p>
-            </div>
-        </div>
+    <div class="card-header bg-success text-center py-3">
+        <h3 class="text-white fw-bold">Completed Shipments</h3>
+        <p class="text-white fw-bold mb-0">
+            <i class="bi bi-check-circle fs-6"></i> Destination Reached – Shipment Complete!
+        </p>
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success shadow-sm rounded">
+        <div class="alert alert-success shadow-sm rounded mt-2">
             <i class="bi bi-check-circle"></i> {{ session('success') }}
         </div>
     @endif
 
-    <div class="table-responsive shadow rounded">
-        <table class="table table-hover bg-white align-middle">
+    <div class="table-responsive shadow rounded mt-3">
+        <table class="table table-hover bg-white align-middle text-nowrap">
             <thead class="table-success">
                 <tr>
                     <th>#</th>
@@ -55,18 +49,16 @@
                         <td>{{ $shipment->total_time ?? 'N/A' }}</td>
                         <td>{{ $shipment->total_km ?? 'N/A' }}</td>
                         <td>{{ $shipment->total_amnt }}</td>
-                        <td>
-                            <div class="d-flex justify-content-end">
-                                <a href="{{ route('completed-shipments.pdf', $shipment->id) }}" class="btn btn-sm btn-outline-success shadow-sm">
-                                    <i class="bi bi-file-earmark-pdf"></i> PDF
-                                </a>
-                            </div>
+                        <td class="text-center">
+                            <a href="{{ route('completed-shipments.pdf', $shipment->id) }}" class="btn btn-sm btn-outline-success shadow-sm w-100">
+                                <i class="bi bi-file-earmark-pdf"></i> PDF
+                            </a>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="13" class="text-center text-muted">
-                            No completed shipments found. <a href="{{ route('shipment.index') }}" class="text-primary">Create a new assignment</a>.
+                        <td colspan="13" class="text-center text-muted py-3">
+                            No completed shipments found.
                         </td>
                     </tr>
                 @endforelse

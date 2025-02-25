@@ -30,6 +30,9 @@ class Shipment extends Model
         'mrktng_persnl',
         'highway_chrg',
         'trnsprt_chrg',
+        'heldUp_hrs',
+        'rate_perHr',
+        'heldUp_chrg',
         'total_amnt',
     ];
 

@@ -149,20 +149,72 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label for="total_amnt" class="form-label">Total Amount</label>
-                        <input type="number" step="0.01" class="form-control @error('total_amnt') is-invalid @enderror" id="total_amnt" name="total_amnt" required>
-                        @error('total_amnt')
+                        <label for="heldUp_hrs" class="form-label">Held Up Hours</label>
+                        <input type="number" step="0.01" class="form-control @error('heldUp_hrs') is-invalid @enderror" id="heldUp_hrs" name="heldUp_hrs" required>
+                        @error('heldUp_hrs')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    <div class="col-md-3">
+                        <label for="rate_perHr" class="form-label">Rate per hour</label>
+                        <input type="number" step="0.01" class="form-control @error('rate_perHr') is-invalid @enderror" id="rate_perHr" name="rate_perHr" required>
+                        @error('rate_perHr')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <!-- Held Up Charge (Calculated) -->
+                    <div class="col-md-3">
+                        <label for="heldUp_chrg" class="form-label">Held Up Charge</label>
+                        <div id="heldUpChrgDisplay" class="form-control-plaintext bg-light p-2 rounded">0</div>
+                        <input type="hidden" id="heldUp_chrg" name="heldUp_chrg">
+                    </div>
+
+                    <!-- Total Amount (Calculated) -->
+                    <div class="col-md-3">
+                        <label for="total_amnt" class="form-label">Total Amount</label>
+                        <div id="totalAmntDisplay" class="form-control-plaintext bg-light p-2 rounded">0</div>
+                        <input type="hidden" id="total_amnt" name="total_amnt">
+                    </div>
                 </div>
             </div>
+
             <div class="card-footer text-end">
                 <button type="submit" class="btn btn-primary">Approve Shipment</button>
             </div>
+
         </div>
     </form>
 </div>
+
+<script>
+    // Function to calculate charges
+    function calculateCharges() {
+        const highwayChrg = parseFloat(document.getElementById('highway_chrg').value) || 0;
+        const trnsprtChrg = parseFloat(document.getElementById('trnsprt_chrg').value) || 0;
+        const heldUpHrs = parseFloat(document.getElementById('heldUp_hrs').value) || 0;
+        const ratePerHr = parseFloat(document.getElementById('rate_perHr').value) || 0;
+
+        // Calculate Held Up Charge
+        const heldUpChrg = heldUpHrs * ratePerHr;
+        document.getElementById('heldUpChrgDisplay').textContent = heldUpChrg.toFixed(2);
+        document.getElementById('heldUp_chrg').value = heldUpChrg.toFixed(2);
+
+        // Calculate Total Amount
+        const totalAmnt = highwayChrg + trnsprtChrg + heldUpChrg;
+        document.getElementById('totalAmntDisplay').textContent = totalAmnt.toFixed(2);
+        document.getElementById('total_amnt').value = totalAmnt.toFixed(2);
+    }
+
+    // Add event listeners to input fields
+    document.getElementById('highway_chrg').addEventListener('input', calculateCharges);
+    document.getElementById('trnsprt_chrg').addEventListener('input', calculateCharges);
+    document.getElementById('heldUp_hrs').addEventListener('input', calculateCharges);
+    document.getElementById('rate_perHr').addEventListener('input', calculateCharges);
+
+    calculateCharges();
+</script>
 
 @endsection
 
@@ -173,5 +225,6 @@
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+
 </script>
 @endpush

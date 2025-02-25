@@ -13,7 +13,7 @@ class AssignedShipmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth:manager');
-        $this->middleware('preventBackHistory')->except(['show', 'store']);
+        $this->middleware('preventBackHistory');
     }
 
     public function index()

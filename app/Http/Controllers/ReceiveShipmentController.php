@@ -15,7 +15,7 @@ class ReceiveShipmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth:driver');
-        $this->middleware('preventBackHistory')->except([ 'showForm', 'store']);
+        $this->middleware('preventBackHistory');
     }
 
 
@@ -27,7 +27,7 @@ class ReceiveShipmentController extends Controller
         // Fetch shipments assigned to the logged-in user
         $receiveShipments = Shipment::with(['driver', 'vehicle'])
                                     ->where('status', 'Assigned')
-                                    ->where('driver_id', $userId) // Assuming 'driver_id' links the shipment to the user
+                                    ->where('driver_id', $userId)
                                     ->orderBy('id', 'asc') // Example: Sort by ID descending - desc | for ascending - asc
                                     ->paginate(25);
 

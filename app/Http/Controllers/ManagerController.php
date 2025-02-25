@@ -7,9 +7,12 @@ use App\Models\Manager;
 
 class ManagerController extends Controller
 {
-
     protected $manager;
-    public function __construct(){
+
+    public function __construct()
+    {
+        $this->middleware('auth'); // Ensures only logged-in users (admins) can access this controller
+        $this->middleware('preventBackHistory'); // Prevents back navigation after logout
         $this->manager = new Manager();
     }
 

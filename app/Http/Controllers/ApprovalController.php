@@ -84,6 +84,9 @@ class ApprovalController extends Controller
             'mrktng_persnl' => 'required|string|max:255',
             'highway_chrg' => 'required|numeric',
             'trnsprt_chrg' => 'required|numeric',
+            'heldUp_hrs' => 'required|numeric',
+            'rate_perHr' => 'required|numeric',
+            'heldUp_chrg' => 'required|numeric',
             'total_amnt' => 'required|numeric',
         ]);
 
@@ -92,6 +95,9 @@ class ApprovalController extends Controller
         $shipment->mrktng_persnl = $request->mrktng_persnl;
         $shipment->highway_chrg = $request->highway_chrg;
         $shipment->trnsprt_chrg = $request->trnsprt_chrg;
+        $shipment->heldUp_hrs = $request->heldUp_hrs;
+        $shipment->rate_perHr = $request->rate_perHr;
+        $shipment->heldUp_chrg = $request->heldUp_chrg;
         $shipment->total_amnt = $request->total_amnt;
         $shipment->status = 'completed';
         $shipment->save();

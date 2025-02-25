@@ -1,21 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-
     <!-- Header Section with Project Title -->
-    <div class="container-fluid p-4 text-center bg-light">
-        <img src="{{ URL('images/msa.png') }}" alt="Header img" class="img-fluid" style="height: auto; max-height: 120px;">
-        <h1 class="text-primary mt-3 mb-1 fw-bold">MSA Transport Management System</h1>
-        <p class="mb-2 text-danger" style="font-size: 0.9rem;">Moving towards the right path >>></p>
+    <div class="container-fluid p-3 p-md-4 text-center bg-light">
+        <img src="{{ URL('images/msa.png') }}" alt="Header img" class="img-fluid" style="height: auto; max-height: 100px;">
+        <h1 class="text-primary mt-2 mt-md-3 mb-1 fw-bold" style="font-size: 1.5rem; font-size: clamp(1.5rem, 4vw, 2rem);">MSA Transport Management System</h1>
+        <p class="mb-2 text-danger" style="font-size: 0.8rem; font-size: clamp(0.8rem, 2.5vw, 0.9rem);">Moving towards the right path >>></p>
     </div>
 
     <!-- Login Form Section -->
-    <div class="container mt-4">
+    <div class="container mt-3 mt-md-4">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                 <div class="card shadow-sm border-light">
-                    <div class="card-body p-4">
-                        <h3 class="text-center mb-3 fw-bold text-primary">Login</h3>
+                    <div class="card-body p-3 p-md-4">
+                        <h3 class="text-center mb-3 fw-bold text-primary" style="font-size: 1.25rem; font-size: clamp(1.25rem, 3.5vw, 1.5rem);">Login</h3>
 
                         <form method="POST" action="{{ route('login') }}">
                             @csrf

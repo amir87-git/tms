@@ -4,7 +4,7 @@
 
 <div class="container py-5">
   <div class="text-center mb-5">
-    <h3 class="fw-bold">Start Trip for Shipment #{{ $shipment->id }}</h3>
+    <h3 class="fw-bold text-primary">Start Trip for Shipment No.{{ $shipment->id }}</h3>
   </div>
 
   <div class="form-container border border-2 border-primary rounded p-4 shadow-sm bg-white">
@@ -21,33 +21,33 @@
 
       <!-- Shipment Details -->
       <div class="row mb-4">
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Client Name:</strong> {{ $shipment->client_name }}</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Phone:</strong> {{ $shipment->phone }}</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Vehicle No:</strong> {{ $shipment->vehicle->vehicle_typ ?? 'N/A' }} {{ $shipment->vehicle->vehicle_no ?? 'N/A' }}</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Trailer No:</strong> {{ $shipment->vehicle->trailer_no ?? 'N/A' }}</div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Start Meter Reading:</strong> {{ $str_mtr_rdng ?? 'Not Available' }}</div>
           <input type="hidden" name="str_mtr_rdng" value="{{ $str_mtr_rdng ?? 0 }}">
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <label for="end_mtr_rdng"><strong>End Meter Reading:</strong></label>
           <input type="number" class="form-control form-control-sm" id="end_mtr_rdng" name="end_mtr_rdng" placeholder="Enter reading" required onchange="calculateTotalKm()">
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <div><strong>Total Kilometers:</strong></div>
           <div id="total_km_display" class="fs-5 fw-bold text-success">0</div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-12 col-md-6 col-lg-3 mb-3">
           <label for="fuel" class="form-label"><strong>Fuel Needed</strong></label>
           <select class="form-select form-select-sm" name="fuel" id="fuel" required aria-label="select" onchange="toggleFuelInput()">
             <option selected disabled>Fuel Needed</option>
@@ -57,7 +57,7 @@
         </div>
 
         <!-- Quantity in Liters (Initially Hidden) -->
-        <div class="col-md-3" id="qty" style="display: none;">
+        <div class="col-12 col-md-6 col-lg-3 mb-3" id="qty" style="display: none;">
           <label for="qty" class="form-label"><strong>Qty Ltr</strong></label>
           <input type="number" class="form-control form-control-sm" id="qty" name="qty" placeholder="Enter quantity in Liters" min="0" step="any">
         </div>
@@ -96,14 +96,14 @@
             <tr>
               <td><input class="form-control" name="location[]" placeholder="Enter location" required></td>
               <td>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-wrap">
                   <input type="date" class="form-control" name="in_date[]" required>
                   <input type="time" class="form-control" name="in_time[]" required>
                   <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('in')">In</button>
                 </div>
               </td>
               <td>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 flex-wrap">
                   <input type="date" class="form-control" name="out_date[]" required>
                   <input type="time" class="form-control" name="out_time[]" required>
                   <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('out')">Out</button>
@@ -121,7 +121,7 @@
 
       <!-- Button Group -->
       <div class="text-end mt-3">
-        <div class="d-flex justify-content-end gap-3">
+        <div class="d-flex justify-content-end gap-3 flex-wrap">
           <button type="submit" class="btn btn-primary btn-md px-4 py-2 shadow-sm rounded">
             <i class="bi bi-check-circle me-1"></i> Submit
           </button>
@@ -199,14 +199,14 @@
     newRow.innerHTML = `
       <td><input class="form-control" name="location[]" placeholder="Enter location" required></td>
       <td>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-wrap">
           <input type="date" class="form-control" name="in_date[]" required>
           <input type="time" class="form-control" name="in_time[]" required>
           <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('in')">In</button>
         </div>
       </td>
       <td>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-wrap">
           <input type="date" class="form-control" name="out_date[]" required>
           <input type="time" class="form-control" name="out_time[]" required>
           <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('out')">Out</button>

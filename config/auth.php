@@ -42,13 +42,13 @@ return [
         ],
 
         'driver' => [ // Add this guard for drivers
-        'driver' => 'session',
-        'provider' => 'drivers',
+            'driver' => 'session',
+            'provider' => 'drivers',
         ],
 
         'manager' => [
-        'driver' => 'session',
-        'provider' => 'managers',
+            'driver' => 'session',
+            'provider' => 'managers',
         ],
     ],
 
@@ -76,14 +76,14 @@ return [
         ],
 
         'drivers' => [ // Add this provider for drivers
-        'driver' => 'eloquent',
-        'model' => App\Models\Driver::class,
+            'driver' => 'eloquent',
+            'model' => App\Models\Driver::class,
         ],
 
         'managers' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Manager::class,
-        ],
+            'driver' => 'eloquent',
+            'model' => App\Models\Manager::class,
+            ],
     ],
 
     /*

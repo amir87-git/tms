@@ -16,6 +16,10 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+        if (Auth::check() || Auth::guard('driver')->check() || Auth::guard('manager')->check()) {
+            return redirect()->route('home'); // Redirect all logged-in users to the same home page
+        }
+
         return view('auth.login');
     }
 
@@ -28,10 +32,10 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        // Check if user is an admin
-        if ($this->isAdmin($credentials['email'], $credentials['password'])) {
+        // Check if user is an admin using Laravel's default authentication
+        if (Auth::attempt($credentials)) {
             Log::info('Admin login successful', ['email' => $credentials['email'], 'user_role' => 'admin']);
-            return redirect()->route('manager.index');
+            return redirect()->route('home');
         }
 
         // Try logging in as a driver
@@ -50,6 +54,7 @@ class LoginController extends Controller
         Log::warning('Login failed', ['email' => $credentials['email']]);
         return back()->withErrors(['email' => 'Invalid email or password'])->withInput();
     }
+    
 
     public function logout(Request $request)
     {
@@ -57,10 +62,5 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login')->with('success', 'You have been logged out successfully.');
-    }
-
-    protected function isAdmin($email, $password)
-    {
-        return $email === 'ad@ad.com' && $password === '123';
     }
 }
