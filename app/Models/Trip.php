@@ -19,6 +19,7 @@ class Trip extends Model
         'in_time',
         'out_date',
         'out_time',
+        'total_time',
     ];
 
     // Define the relationship with the Shipment model

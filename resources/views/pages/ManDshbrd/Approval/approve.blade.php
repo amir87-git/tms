@@ -97,6 +97,7 @@
                                 <th>In Time</th>
                                 <th>Out Date</th>
                                 <th>Out Time</th>
+                                <th>Total Time</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,6 +109,7 @@
                                 <td>{{ $trip->in_time }}</td>
                                 <td>{{ $trip->out_date }}</td>
                                 <td>{{ $trip->out_time }}</td>
+                                <td>{{ $trip->total_time }}</td>
                             </tr>
                             @endforeach
                         </tbody>

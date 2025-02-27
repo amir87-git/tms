@@ -23,7 +23,7 @@ class Shipment extends Model
         'driver_id',
         'vehicle_id',
         'trailer_no',
-        'total_time',
+        'overall_time',
         'total_km',
         'fuel',
         'qty',

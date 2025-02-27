@@ -47,9 +47,10 @@ class TripController extends Controller
             'in_time'     => 'required|array',
             'out_date'    => 'required|array',
             'out_time'    => 'required|array',
-            'total_time'  => 'required|string',
+            'total_time'    => 'required|array',
+            'overall_time'  => 'required|string',
             'total_km'    => 'required|numeric',
-            'fuel'        => 'required|string',
+            'fuel'        => 'required|in:yes,no',
             'qty'         => 'required_if:fuel,yes|nullable|numeric',
         ]);
 
@@ -62,14 +63,16 @@ class TripController extends Controller
                 'in_time'     => $validatedData['in_time'][$index],
                 'out_date'    => $validatedData['out_date'][$index],
                 'out_time'    => $validatedData['out_time'][$index],
+                'total_time'    => $validatedData['total_time'][$index],
             ]);
         }
 
         // Update Shipment with total time and total kilometers
         $shipment = Shipment::findOrFail($validatedData['shipment_id']);
         $shipment->update([
-            'total_time' => $validatedData['total_time'],
+            'overall_time' => $validatedData['overall_time'],
             'total_km'   => $validatedData['total_km'],
+            'fuel'       => $validatedData['fuel'],
         ]);
 
         if ($validatedData['fuel'] === 'yes' && isset($validatedData['qty'])) {

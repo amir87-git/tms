@@ -16,6 +16,7 @@
       <div class="text-start mb-4">
         <span class="badge bg-primary p-2">
           <strong>Trip Duration:</strong> <span id="timer">00:00:00</span>
+          <span id="start_time" class="ms-2 text-white fw-bold">Started</span>
         </span>
       </div>
 
@@ -78,7 +79,7 @@
       </div>
 
       <!-- Hidden fields for total time and total kilometers -->
-      <input type="hidden" name="total_time" id="total_time">
+      <input type="hidden" name="overall_time" id="overall_time">
       <input type="hidden" name="total_km" id="total_km">
 
       <!-- Shipment Details (Input fields for each trip) -->
@@ -89,6 +90,7 @@
               <th>Location</th>
               <th>In Date & Time</th>
               <th>Out Date & Time</th>
+              <th>Total Time</th> <!-- New Column -->
               <th class="text-center">Action</th>
             </tr>
           </thead>
@@ -97,17 +99,21 @@
               <td><input class="form-control" name="location[]" placeholder="Enter location" required></td>
               <td>
                 <div class="d-flex gap-2 flex-wrap">
-                  <input type="date" class="form-control" name="in_date[]" required>
-                  <input type="time" class="form-control" name="in_time[]" required>
+                  <input type="date" class="form-control" name="in_date[]" required onchange="calculateTotalTime(this)">
+                  <input type="time" class="form-control" name="in_time[]" required onchange="calculateTotalTime(this)">
                   <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('in')">In</button>
                 </div>
               </td>
               <td>
                 <div class="d-flex gap-2 flex-wrap">
-                  <input type="date" class="form-control" name="out_date[]" required>
-                  <input type="time" class="form-control" name="out_time[]" required>
+                  <input type="date" class="form-control" name="out_date[]" required onchange="calculateTotalTime(this)">
+                  <input type="time" class="form-control" name="out_time[]" required onchange="calculateTotalTime(this)">
                   <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('out')">Out</button>
                 </div>
+              </td>
+              <td>
+                <span class="total-time-display">00:00:00</span> <!-- Display total time here -->
+                <input type="hidden" name="total_time[]" class="total-time-input" value="00:00:00"> <!-- Hidden input for form submission -->
               </td>
               <td class="text-center">
                 <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
@@ -158,14 +164,14 @@
   function stopTimer() {
     clearInterval(timerInterval);
     const endTime = new Date().getTime();
-    const totalDuration = Math.floor((endTime - startTime) / 1000);
+    const overallDuration = Math.floor((endTime - startTime) / 1000);
 
-    const hours = Math.floor(totalDuration / 3600);
-    const minutes = Math.floor((totalDuration % 3600) / 60);
-    const seconds = totalDuration % 60;
+    const hours = Math.floor(overallDuration / 3600);
+    const minutes = Math.floor((overallDuration % 3600) / 60);
+    const seconds = overallDuration % 60;
 
     const formattedDuration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    document.getElementById('total_time').value = formattedDuration;
+    document.getElementById('overall_time').value = formattedDuration;
   }
 
   function calculateTotalKm() {
@@ -187,6 +193,36 @@
     }
   }
 
+  function calculateTotalTime(input) {
+    const row = input.closest("tr"); // Get the current row
+    const inDate = row.querySelector('input[name="in_date[]"]').value;
+    const inTime = row.querySelector('input[name="in_time[]"]').value;
+    const outDate = row.querySelector('input[name="out_date[]"]').value;
+    const outTime = row.querySelector('input[name="out_time[]"]').value;
+
+    if (inDate && inTime && outDate && outTime) {
+      const inDateTime = new Date(`${inDate}T${inTime}`);
+      const outDateTime = new Date(`${outDate}T${outTime}`);
+
+      if (outDateTime > inDateTime) {
+        const timeDiff = outDateTime - inDateTime; // Difference in milliseconds
+        const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+        const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        // Update the display and hidden input
+        row.querySelector('.total-time-display').textContent = formattedTime;
+        row.querySelector('.total-time-input').value = formattedTime;
+      } else {
+        alert("Out time must be later than In time.");
+        row.querySelector('.total-time-display').textContent = "00:00:00";
+        row.querySelector('.total-time-input').value = "00:00:00";
+      }
+    }
+  }
+
   function finalizeData() {
     stopTimer();
     calculateTotalKm();
@@ -200,17 +236,21 @@
       <td><input class="form-control" name="location[]" placeholder="Enter location" required></td>
       <td>
         <div class="d-flex gap-2 flex-wrap">
-          <input type="date" class="form-control" name="in_date[]" required>
-          <input type="time" class="form-control" name="in_time[]" required>
+          <input type="date" class="form-control" name="in_date[]" required onchange="calculateTotalTime(this)">
+          <input type="time" class="form-control" name="in_time[]" required onchange="calculateTotalTime(this)">
           <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('in')">In</button>
         </div>
       </td>
       <td>
         <div class="d-flex gap-2 flex-wrap">
-          <input type="date" class="form-control" name="out_date[]" required>
-          <input type="time" class="form-control" name="out_time[]" required>
+          <input type="date" class="form-control" name="out_date[]" required onchange="calculateTotalTime(this)">
+          <input type="time" class="form-control" name="out_time[]" required onchange="calculateTotalTime(this)">
           <button type="button" class="btn btn-secondary btn-sm" onclick="setCurrentDateTime('out')">Out</button>
         </div>
+      </td>
+      <td>
+        <span class="total-time-display">00:00:00</span>
+        <input type="hidden" name="total_time[]" class="total-time-input" value="00:00:00">
       </td>
       <td class="text-center">
         <button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">
