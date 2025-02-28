@@ -7,6 +7,7 @@ use App\Models\Shipment;
 use App\Models\Trip;
 use App\Models\Vehicle;
 use Brick\Math\BigNumber;
+use Carbon\Carbon;
 
 class TripController extends Controller
 {
@@ -48,6 +49,8 @@ class TripController extends Controller
             'out_date'    => 'required|array',
             'out_time'    => 'required|array',
             'total_time'    => 'required|array',
+            'start_time'    => 'required',
+            'end_time'    => 'required',
             'overall_time'  => 'required|string',
             'total_km'    => 'required|numeric',
             'fuel'        => 'required|in:yes,no',
@@ -73,6 +76,8 @@ class TripController extends Controller
             'overall_time' => $validatedData['overall_time'],
             'total_km'   => $validatedData['total_km'],
             'fuel'       => $validatedData['fuel'],
+            'start_time' => Carbon::parse($validatedData['start_time'])->format('Y-m-d H:i:s'),
+            'end_time'   => Carbon::parse($validatedData['end_time'])->format('Y-m-d H:i:s'),
         ]);
 
         if ($validatedData['fuel'] === 'yes' && isset($validatedData['qty'])) {

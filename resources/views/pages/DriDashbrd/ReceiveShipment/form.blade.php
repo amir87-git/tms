@@ -12,12 +12,9 @@
       @csrf
       <input type="hidden" name="shipment_id" value="{{ $shipment->id }}">
 
-      <!-- Timer Display -->
-      <div class="text-start mb-4">
-        <span class="badge bg-primary p-2">
-          <strong>Trip Duration:</strong> <span id="timer">00:00:00</span>
-          <span id="start_time" class="ms-2 text-white fw-bold">Started</span>
-        </span>
+      <div class="mb-3">
+        <label for="start_time" class="form-label">Start Time</label>
+        <input type="text" class="form-control" id="start_time" name="start_time" value="{{ now() }}" readonly>
       </div>
 
       <!-- Shipment Details -->
@@ -81,6 +78,7 @@
       <!-- Hidden fields for total time and total kilometers -->
       <input type="hidden" name="overall_time" id="overall_time">
       <input type="hidden" name="total_km" id="total_km">
+      <input type="hidden" name="end_time" id="end_time">
 
       <!-- Shipment Details (Input fields for each trip) -->
       <div class="table-responsive">
@@ -141,38 +139,36 @@
 </div>
 
 <script>
-  let timerInterval;
   let startTime;
 
+  // Capture start time when the page loads
   window.onload = function() {
-    startTime = new Date().getTime();
-    timerInterval = setInterval(updateTimer, 1000);
+    startTime = new Date().getTime(); // Store start time in milliseconds
   };
 
-  function updateTimer() {
-    const currentTime = new Date().getTime();
-    const elapsedTime = currentTime - startTime;
+  // Function to calculate overall time and set it in the hidden input
+  function finalizeData() {
+    const endTime = new Date(); // Get the current date and time when form is submitted
+    const overallDuration = endTime - startTime; // Calculate duration in milliseconds
 
-    const hours = Math.floor(elapsedTime / (1000 * 60 * 60));
-    const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
-
-    document.getElementById('timer').textContent =
-      `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }
-
-  function stopTimer() {
-    clearInterval(timerInterval);
-    const endTime = new Date().getTime();
-    const overallDuration = Math.floor((endTime - startTime) / 1000);
-
-    const hours = Math.floor(overallDuration / 3600);
-    const minutes = Math.floor((overallDuration % 3600) / 60);
-    const seconds = overallDuration % 60;
+    // Convert duration to HH:MM:SS format
+    const hours = Math.floor(overallDuration / (1000 * 60 * 60));
+    const minutes = Math.floor((overallDuration % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((overallDuration % (1000 * 60)) / 1000);
 
     const formattedDuration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    // Set the overall time in the hidden input
     document.getElementById('overall_time').value = formattedDuration;
-  }
+
+    // Set the current time as the end_time
+    const endTimeFormatted = endTime.toLocaleString('en-US', {hour12: false,}).slice(0, 19).replace('T', ' '); // Format: YYYY-MM-DD HH:MM:SS
+    document.getElementById('end_time').value = endTimeFormatted;
+
+    // Continue with other form submission logic
+    calculateTotalKm();
+}
+
 
   function calculateTotalKm() {
     const startMeter = parseFloat(document.querySelector('input[name="str_mtr_rdng"]').value);
@@ -223,11 +219,6 @@
     }
   }
 
-  function finalizeData() {
-    stopTimer();
-    calculateTotalKm();
-  }
-
   function addTripDetails() {
     const table = document.getElementById("shipments").getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
@@ -266,32 +257,31 @@
   }
 
   function setCurrentDateTime(type) {
-      const currentDate = new Date();
-      const dateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
-      const timeString = currentDate.toTimeString().split(':').slice(0, 2).join(':');; // HH:MM
+    const currentDate = new Date();
+    const dateString = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
+    const timeString = currentDate.toTimeString().split(':').slice(0, 2).join(':'); // HH:MM
 
-      // Get the row where the button was clicked
-      const row = event.target.closest("tr");
+    // Get the row where the button was clicked
+    const row = event.target.closest("tr");
 
-      if (row) {
-          if (type === 'in') {
-              // Target inputs for 'in_date' and 'in_time' in the same row
-              const inDateInput = row.querySelector('input[name="in_date[]"]');
-              const inTimeInput = row.querySelector('input[name="in_time[]"]');
-              if (inDateInput) inDateInput.value = dateString;
-              if (inTimeInput) inTimeInput.value = timeString;
-          } else {
-              // Target inputs for 'out_date' and 'out_time' in the same row
-              const outDateInput = row.querySelector('input[name="out_date[]"]');
-              const outTimeInput = row.querySelector('input[name="out_time[]"]');
-              if (outDateInput) outDateInput.value = dateString;
-              if (outTimeInput) outTimeInput.value = timeString;
-          }
+    if (row) {
+      if (type === 'in') {
+        // Target inputs for 'in_date' and 'in_time' in the same row
+        const inDateInput = row.querySelector('input[name="in_date[]"]');
+        const inTimeInput = row.querySelector('input[name="in_time[]"]');
+        if (inDateInput) inDateInput.value = dateString;
+        if (inTimeInput) inTimeInput.value = timeString;
       } else {
-          console.error('Row not found!');
+        // Target inputs for 'out_date' and 'out_time' in the same row
+        const outDateInput = row.querySelector('input[name="out_date[]"]');
+        const outTimeInput = row.querySelector('input[name="out_time[]"]');
+        if (outDateInput) outDateInput.value = dateString;
+        if (outTimeInput) outTimeInput.value = timeString;
       }
+    } else {
+      console.error('Row not found!');
+    }
   }
-
 </script>
 
 @endsection
