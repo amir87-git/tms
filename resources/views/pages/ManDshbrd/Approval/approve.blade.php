@@ -56,10 +56,10 @@
                 </div>
 
                 <div class="col-md-3">
-                    <label for="total_time" class="form-label fw-bold">
-                        <i class="bi bi-truck" data-bs-toggle="tooltip" data-bs-placement="top" title="Total Time."></i> Total Time.
+                    <label for="overall_time" class="form-label fw-bold">
+                        <i class="bi bi-truck" data-bs-toggle="tooltip" data-bs-placement="top" title="Overall Time."></i> Overall Time.
                     </label>
-                    <input type="text" class="form-control" name="total_time" value="{{ $shipment->total_time ?? 'N/A' }}" readonly>
+                    <input type="text" class="form-control" name="overall_time" value="{{ $shipment->overall_time ?? 'N/A' }}" readonly>
                 </div>
 
                 <div class="col-md-3">

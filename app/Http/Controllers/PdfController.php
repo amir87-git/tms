@@ -20,7 +20,8 @@ class PdfController extends Controller
         ];
 
         // Load the PDF view and pass the shipment data
-        $pdf = PDF::loadView('pages.completedShipments.pdf', $data);
+        $pdf = PDF::loadView('pages.completedShipments.pdf', $data)
+                    ->setPaper('a4', 'portrait');
 
         // Download the PDF or return it as a response to view
         return $pdf->stream('shipment-' . $shipment->id . '.pdf');

@@ -40,23 +40,38 @@
     <!-- Filter/Search Section -->
     <div class="d-flex justify-content-between mb-4 align-items-center">
         <div>
-            <button class="btn btn-primary btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="View all shipments">
-                <i class="bi bi-funnel"></i> All
-            </button>
-            <button class="btn btn-success btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="View approved shipments">
-                <i class="bi bi-check-circle"></i> Approved
-            </button>
-            <button class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="View rejected shipments">
-                <i class="bi bi-x-circle"></i> Rejected
-            </button>
+            <a href="{{ route('approval.index') }}" class="text-decoration-none">
+                <button class="btn btn-primary btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="View all shipments">
+                    <i class="bi bi-funnel"></i> All
+                </button>
+            </a>
+            <a href="{{ route('completedShipments.index') }}" class="text-decoration-none">
+                <button class="btn btn-success btn-sm me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="View approved shipments">
+                    <i class="bi bi-check-circle"></i> Completed
+                </button>
+            </a>
+            <a href="{{ route('assigned-shipments.index') }}" class="text-decoration-none">
+                <button class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="View rejected shipments">
+                    <i class="bi bi-x-circle"></i> Assigned
+                </button>
+            </a>
         </div>
+        
         <div class="input-group w-25">
-            <input type="text" class="form-control form-control-sm" placeholder="Search shipments...">
-            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
-                <i class="bi bi-search"></i>
-            </button>
+            <form action="{{ route('approval.index') }}" method="GET" class="w-100">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control form-control-sm" 
+                        placeholder="Search by ID or Driver..." 
+                        value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm" 
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+    
 
     <!-- Shipment Cards Section -->
     <div class="row gy-4">

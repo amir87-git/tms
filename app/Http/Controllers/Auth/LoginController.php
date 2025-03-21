@@ -35,7 +35,7 @@ class LoginController extends Controller
         // Check if user is an admin using Laravel's default authentication
         if (Auth::attempt($credentials)) {
             Log::info('Admin login successful', ['email' => $credentials['email'], 'user_role' => 'admin']);
-            return redirect()->route('home');
+            return redirect()->route('manager.index');
         }
 
         // Try logging in as a driver

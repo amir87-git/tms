@@ -26,18 +26,18 @@
 
         <div class="nav flex-column px-3">
             <div class="nav-item mb-2">
-                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('vehicle.index') ? 'active' : '' }}" href="{{ route('vehicle.index') }}">
-                    <i class="bi bi-truck me-2"></i> Vehicle Management
-                </a>
-            </div>
-            <div class="nav-item mb-2">
                 <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('shipment.index') ? 'active' : '' }}" href="{{ route('shipment.index') }}">
                     <i class="bi bi-cloud-arrow-up me-2"></i> Upload Shipments
                 </a>
             </div>
             <div class="nav-item mb-2">
-                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('completedShipments.index') ? 'active' : '' }}" href="{{ route('completedShipments.index') }}">
-                    <i class="bi bi-check-circle me-2"></i> Completed Shipments
+                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('vehicle.index') ? 'active' : '' }}" href="{{ route('vehicle.index') }}">
+                    <i class="bi bi-truck me-2"></i> Vehicle Management
+                </a>
+            </div>
+            <div class="nav-item mb-2">
+                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('driver.index') ? 'active' : '' }}" href="{{ route('driver.index') }}">
+                    <i class="bi bi-person-badge me-2"></i> Driver Management
                 </a>
             </div>
             <div class="nav-item mb-2">
@@ -46,8 +46,8 @@
                 </a>
             </div>
             <div class="nav-item mb-2">
-                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('driver.index') ? 'active' : '' }}" href="{{ route('driver.index') }}">
-                    <i class="bi bi-person-badge me-2"></i> Driver Management
+                <a class="btn btn-outline-light w-100 py-3 mb-2 rounded-3 text-start hover-shadow {{ request()->routeIs('completedShipments.index') ? 'active' : '' }}" href="{{ route('completedShipments.index') }}">
+                    <i class="bi bi-check-circle me-2"></i> Completed Shipments
                 </a>
             </div>
         </div>

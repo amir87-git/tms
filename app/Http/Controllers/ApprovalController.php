@@ -13,13 +13,28 @@ class ApprovalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Only get shipments that have at least one trip associated with them
-        $approvalShipments = Shipment::has('trips')
-                                    ->with(['driver', 'vehicle', 'trips']) // Eager load the necessary relationships
-                                    ->where('status', 'Assigned')
-                                    ->get();
+        // Get the search term from the request
+        $search = $request->query('search');
+
+        // Start the query with your existing conditions
+        $query = Shipment::has('trips') // Only shipments with at least one trip
+                        ->with(['driver', 'vehicle', 'trips']) // Eager load relationships
+                        ->where('status', 'Assigned'); // Filter by 'Assigned' status
+
+        // Apply search filter if a search term is provided
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%") // Search by shipment ID
+                  ->orWhereHas('driver', function ($q) use ($search) {
+                      $q->where('username', 'like', "%{$search}%"); // Search by driver username
+                  });
+            });
+        }
+
+        // Get the filtered results (with pagination if desired)
+        $approvalShipments = $query->get(); // Or use ->paginate(9) for pagination
 
         return view('pages.ManDshbrd.Approval.index', compact('approvalShipments'));
     }

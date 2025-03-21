@@ -56,5 +56,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::get('completed-shipments/pdf/{shipment}', [PdfController::class, 'generatePDF'])->name('completed-shipments.pdf');
+Route::post('/save-draft', [TripController::class, 'saveDraft']);
+Route::get('/get-draft/{shipment}', [TripController::class, 'getDraft']);
 
 
